@@ -12,6 +12,7 @@ truecaser_model = truecaser.load_model(truecaser_model_file)
 sheet = "bachelor's thesis precat worksheet.xlsx"
 wb = openpyxl.load_workbook(sheet)
 
+
 def make_245_a(title):
     deslashed = deslash_title(title)
     if needs_truecase(deslashed, "title"):
@@ -33,18 +34,19 @@ def make_245_c(author_statement):
 
     return styled
 
+
 def deslash_author_statement(str_):
     """Convert a string like by J. P. Anderson \ A. H. Boileau \ W. E. Dexter \ J. A. Yungclas."
     to one like "by J. P. Anderson, A. H. Boileau, W. E. Dexter, and J. A. Yungclas."
     """
-    if (str_.count("\\") == 1):
+    if str_.count("\\") == 1:
         deslashed = str_.replace("\\", " and ")
-    elif (str_.count("\\") > 1):
+    elif str_.count("\\") > 1:
         temp = str_.replace("\\", ", ").replace(" ,", ",")
         # Replace the last comma with an and
         deslashed = " and ".join(
             [temp[: temp.rfind(",") + 1], temp[temp.rfind(",") + 1 :]]
-        )      
+        )
     else:
         deslashed = str_
 
@@ -60,6 +62,7 @@ def deslash_title(str_):
 def truecase(str_):
     tokens = str_.split(" ")
     return " ".join(truecaser.get_true_case(tokens, "title", truecaser_model))
+
 
 def needs_truecase(str_, type_):
     """Checks if a string needs to be truecased.
@@ -89,7 +92,7 @@ def needs_truecase(str_, type_):
         else:
             return_ = False
     elif type_ == "author":
-        # "by HERBERT CHARLES FLINT and WILLIAM FRANCIS LAGRANGE" 
+        # "by HERBERT CHARLES FLINT and WILLIAM FRANCIS LAGRANGE"
         # should return True.
         # "By A. A. Baustian, H. D. Susong, and E. Young" should
         # return False.
@@ -110,7 +113,7 @@ def final_styling_for_title(str_):
 
 
 def final_styling_for_author(str_):
-    #lowercase "By"; end with "."
+    # lowercase "By"; end with "."
     if str_.startswith("By"):
         styled_str = "by" + str_[2:]
     else:
@@ -120,4 +123,3 @@ def final_styling_for_author(str_):
         styled_str += "."
 
     return styled_str
-

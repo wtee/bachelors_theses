@@ -1,16 +1,30 @@
 import unittest
 
-from process_theses import deslash_author_statement, deslash_title, truecase, needs_truecase, final_styling_for_title, final_styling_for_author, make_245_c, make_245_a
+from process_theses import (
+    deslash_author_statement,
+    deslash_title,
+    truecase,
+    needs_truecase,
+    final_styling_for_title,
+    final_styling_for_author,
+    make_245_c,
+    make_245_a,
+)
+
 
 class UtilsTests(unittest.TestCase):
     def test_deslash_author_statement(self):
-        test_string = "by J. P. Anderson \ A. H. Boileau \ W. E. Dexter \ J. A. Yungclas."
+        test_string = (
+            "by J. P. Anderson \ A. H. Boileau \ W. E. Dexter \ J. A. Yungclas."
+        )
         desired = "by J. P. Anderson, A. H. Boileau, W. E. Dexter, and J. A. Yungclas."
         result = deslash_author_statement(test_string)
         self.assertEqual(result, desired)
-    
+
     def test_deslash_title(self):
-        test_string = "A Genetic Analysis \ of \ a Rabbit Stock as regards the \ Color Factor"
+        test_string = (
+            "A Genetic Analysis \ of \ a Rabbit Stock as regards the \ Color Factor"
+        )
         desired = "A Genetic Analysis of a Rabbit Stock as regards the Color Factor"
         result = deslash_title(test_string)
         self.assertEqual(result, desired)
@@ -73,7 +87,7 @@ class UtilsTests(unittest.TestCase):
         result = final_styling_for_title(test_string)
 
         self.assertEqual(result, desired)
-    
+
     def test_final_styling_for_author(self):
         test_string = "By A. A. Baustian, H. D. Susong, and E. Young"
         desired = "by A. A. Baustian, H. D. Susong, and E. Young."
@@ -84,7 +98,9 @@ class UtilsTests(unittest.TestCase):
 
     def test_make_245_c(self):
         test_string1 = "BY HERBERT CHARLES FLINT \ WILLIAM FRANCIS LAGRANGE"
-        test_string2 = "by J. P. Anderson \ A. H. Boileau \ W. E. Dexter \ J. A. Yungclas."
+        test_string2 = (
+            "by J. P. Anderson \ A. H. Boileau \ W. E. Dexter \ J. A. Yungclas."
+        )
 
         desired1 = "by Herbert Charles Flint and William Francis Lagrange."
         desired2 = "by J. P. Anderson, A. H. Boileau, W. E. Dexter, and J. A. Yungclas."
@@ -96,7 +112,9 @@ class UtilsTests(unittest.TestCase):
         self.assertEqual(result2, desired2)
 
     def test_make_245_a(self):
-        test_string1 = "A Genetic Analysis \ of \ a Rabbit Stock as regards the \ Color Factor"
+        test_string1 = (
+            "A Genetic Analysis \ of \ a Rabbit Stock as regards the \ Color Factor"
+        )
         test_string2 = "COST ACCOUNT STUDY OF AN IOWA FARM \ 1918 - 1919."
 
         desired1 = "A genetic analysis of a rabbit stock as regards the color factor /"
